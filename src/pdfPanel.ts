@@ -42,7 +42,7 @@ export class PdfPanel {
             }
         );
 
-        w.webview.html = fs.readFileSync( path.join(this.extensionPath, 'media', 'index.html'), 'utf8');
+        w.webview.html = fs.readFileSync( path.join(this.extensionPath, 'media', 'web/viewer.html'), 'utf8');
        
         return w;
     }
