@@ -399,7 +399,7 @@ var PDFViewerApplication = {
   downloadComplete: false,
   isViewerEmbedded: window.parent !== window,
   url: '',
-  baseUrl: '',
+  baseUrl: 'vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/web/',
   externalServices: DefaultExternalServices,
   _boundEvents: {},
   contentDispositionFilename: null,
@@ -5082,7 +5082,7 @@ var defaultOptions = {
     kind: OptionKind.VIEWER
   },
   defaultUrl: {
-    value: 'compressed.tracemonkey-pldi-09.pdf',
+    value: 'vscode-resource:/home/hernad/.vscode/extensions/F18/data/test.pdf',
     kind: OptionKind.VIEWER
   },
   defaultZoomValue: {
@@ -5130,7 +5130,7 @@ var defaultOptions = {
     kind: OptionKind.VIEWER
   },
   imageResourcesPath: {
-    value: './images/',
+    value: 'vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/web/images/',
     kind: OptionKind.VIEWER
   },
   maxCanvasPixels: {
@@ -5178,7 +5178,7 @@ var defaultOptions = {
     kind: OptionKind.API
   },
   cMapUrl: {
-    value: '../web/cmaps/',
+    value: 'vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/web/cmaps/',
     kind: OptionKind.API
   },
   disableAutoFetch: {
@@ -5226,7 +5226,7 @@ var defaultOptions = {
     kind: OptionKind.WORKER
   },
   workerSrc: {
-    value: '../build/pdf.worker.js',
+    value: 'vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/build/pdf.worker.js',
     kind: OptionKind.WORKER
   }
 };
