@@ -29,15 +29,13 @@ See https://github.com/adobe-type-tools/cmap-resources
     <title>PDF.js viewer</title>
 
 
-    <link rel="stylesheet" href="viewer.css">
-
+    <link rel="stylesheet" href="vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/web/viewer.css">
 
 <!-- This snippet is used in production (included from viewer.html) -->
-<link rel="resource" type="application/l10n" href="locale/locale.properties">
-<script src="../build/pdf.js"></script>
+    <link rel="resource" type="application/l10n" href="vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/web/locale/locale.properties">
+    <script src="vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/build/pdf.js"></script>
 
-
-    <script src="viewer.js"></script>
+    <script src="vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/web/viewer.js"></script>
 
   </head>
 
@@ -115,13 +113,16 @@ See https://github.com/adobe-type-tools/cmap-resources
               <span data-l10n-id="print_label">Print</span>
             </button>
 
+           
             <button id="secondaryDownload" class="secondaryToolbarButton download visibleMediumView" title="Download" tabindex="54" data-l10n-id="download">
               <span data-l10n-id="download_label">Download</span>
             </button>
+      
 
             <a href="#" id="secondaryViewBookmark" class="secondaryToolbarButton bookmark visibleSmallView" title="Current view (copy or open in new window)" tabindex="55" data-l10n-id="bookmark">
               <span data-l10n-id="bookmark_label">Current View</span>
             </a>
+        
 
             <div class="horizontalToolbarSeparator visibleLargeView"></div>
 

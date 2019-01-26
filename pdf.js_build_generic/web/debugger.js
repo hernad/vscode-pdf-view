@@ -21,26 +21,30 @@ var FontInspector = (function FontInspectorClosure() {
   var active = false;
   var fontAttribute = 'data-font-name';
   function removeSelection() {
-    let divs = document.querySelectorAll(`span[${fontAttribute}]`);
-    for (let div of divs) {
+    var divs = document.querySelectorAll('div[' + fontAttribute + ']');
+    for (var i = 0, ii = divs.length; i < ii; ++i) {
+      var div = divs[i];
       div.className = '';
     }
   }
   function resetSelection() {
-    let divs = document.querySelectorAll(`span[${fontAttribute}]`);
-    for (let div of divs) {
+    var divs = document.querySelectorAll('div[' + fontAttribute + ']');
+    for (var i = 0, ii = divs.length; i < ii; ++i) {
+      var div = divs[i];
       div.className = 'debuggerHideText';
     }
   }
   function selectFont(fontName, show) {
-    let divs = document.querySelectorAll(`span[${fontAttribute}=${fontName}]`);
-    for (let div of divs) {
+    var divs = document.querySelectorAll('div[' + fontAttribute + '=' +
+                                         fontName + ']');
+    for (var i = 0, ii = divs.length; i < ii; ++i) {
+      var div = divs[i];
       div.className = show ? 'debuggerShowText' : 'debuggerHideText';
     }
   }
   function textLayerClick(e) {
     if (!e.target.dataset.fontName ||
-        e.target.tagName.toUpperCase() !== 'SPAN') {
+        e.target.tagName.toUpperCase() !== 'DIV') {
       return;
     }
     var fontName = e.target.dataset.fontName;
