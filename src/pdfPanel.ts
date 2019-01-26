@@ -35,13 +35,14 @@ export class PdfPanel {
 
                 // And restric the webview to only loading content from our extension's `media` directory.
                 localResourceRoots: [
-                    vscode.Uri.file(path.join(this.extensionPath, 'cli')),
-                    vscode.Uri.file(path.join(this.extensionPath, 'build'))
+                    vscode.Uri.file(path.join(this.extensionPath, 'media')),
+                    vscode.Uri.file(path.join(this.extensionPath, 'node_modules')),
+                    vscode.Uri.file(path.join('/home/hernad/.vscode/extensions/F18/data')),
                 ]
             }
         );
 
-        w.webview.html = fs.readFileSync( path.join(this.extensionPath, 'media',  'index.html'), 'utf8');
+        w.webview.html = fs.readFileSync( path.join(this.extensionPath, 'media', 'index.html'), 'utf8');
        
         return w;
     }
