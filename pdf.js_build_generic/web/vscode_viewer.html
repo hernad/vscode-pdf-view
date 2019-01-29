@@ -1,45 +1,52 @@
 ﻿<!DOCTYPE html>
-<!--
-Copyright 2012 Mozilla Foundation
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+<html lang="bs" dir="ltr" mozdisallowselectionprint>
 
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-Adobe CMap resources are covered by their own copyright but the same license:
-
-    Copyright 1990-2015 Adobe Systems Incorporated.
-
-See https://github.com/adobe-type-tools/cmap-resources
--->
-<html dir="ltr" mozdisallowselectionprint>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="google" content="notranslate">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>PDF.js viewer</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>vscode PDF.js</title>
+      
+        <link rel="stylesheet" href="${extensionPath}/pdf.js_build_generic/web/viewer.css">
 
+       <link rel="resource" type="application/l10n" href="${extensionPath}/pdf.js_build_generic/web/locale/locale.properties">
+     
+        <script>
+            (document.getElementsByTagName('html')[0]).setAttribute('lang', 'bs');
+        </script>
+        <script src="${extensionPath}/pdf.js_build_generic/build/pdf.js"></script>
+        <script src="${extensionPath}/pdf.js_build_generic/web/debugger.js"></script>
+        <script src="${extensionPath}/pdf.js_build_generic/web/vscode_viewer.js"></script>
 
-    <link rel="stylesheet" href="vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/web/viewer.css">
+        <script>
+            function onLoad() {
+              // window.PDFViewerApplication = pdfjsWebApp.PDFViewerApplication;
+              // window.PDFViewerApplicationOptions = pdfjsWebAppOptions.AppOptions;          
+              // vscode-patch 1
+              document.getElementById('download').setAttribute('hidden', 'true');
+              document.getElementById('viewBookmark').setAttribute('hidden', 'true');
+              document.getElementById('secondaryDownload').setAttribute('hidden', 'true');
+              document.getElementById('secondaryViewBookmark').setAttribute('hidden', 'true');
+  
+              PDFViewerApplicationOptions.set('defaultUrl', '${defaultUrl}');
+              PDFViewerApplicationOptions.set('disableHistory', true);
+              PDFViewerApplicationOptions.set('enablePrintAutoRotate', true);
+              PDFViewerApplicationOptions.set('imageResourcesPath',  '${extensionPath}/pdf.js_build_generic/web/images/');
+              PDFViewerApplicationOptions.set('cMapUrl',  '${extensionPath}/pdf.js_build_generic/web/cmaps/');
+              PDFViewerApplicationOptions.set('workerSrc',  '${extensionPath}/pdf.js_build_generic/build/pdf.worker.js');
+              // PDFViewerApplicationOptions.set('locale', 'bs-BA');
+              console.log('pdf.js AppOptions set');
 
-<!-- This snippet is used in production (included from viewer.html) -->
-    <link rel="resource" type="application/l10n" href="vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/web/locale/locale.properties">
-    <script src="vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/build/pdf.js"></script>
-
-    <script src="vscode-resource:/home/hernad/pdf-view/pdf.js_build_generic/web/viewer.js"></script>
+            }
+            document.addEventListener('DOMContentLoaded', onLoad, true);
+            
+          </script>
+ 
 
   </head>
 
   <body tabindex="1" class="loadingInProgress">
+    
     <div id="outerContainer">
 
       <div id="sidebarContainer">
@@ -113,16 +120,13 @@ See https://github.com/adobe-type-tools/cmap-resources
               <span data-l10n-id="print_label">Print</span>
             </button>
 
-           
             <button id="secondaryDownload" class="secondaryToolbarButton download visibleMediumView" title="Download" tabindex="54" data-l10n-id="download">
               <span data-l10n-id="download_label">Download</span>
             </button>
-      
 
             <a href="#" id="secondaryViewBookmark" class="secondaryToolbarButton bookmark visibleSmallView" title="Current view (copy or open in new window)" tabindex="55" data-l10n-id="bookmark">
               <span data-l10n-id="bookmark_label">Current View</span>
             </a>
-        
 
             <div class="horizontalToolbarSeparator visibleLargeView"></div>
 
@@ -372,6 +376,7 @@ See https://github.com/adobe-type-tools/cmap-resources
             </div>
           </div>
         </div>
+        
         <div id="printServiceOverlay" class="container hidden">
           <div class="dialog">
             <div class="row">
@@ -386,10 +391,17 @@ See https://github.com/adobe-type-tools/cmap-resources
             </div>
           </div>
         </div>
-      </div>  <!-- overlayContainer -->
+
+      </div> <!-- overlayContainer -->
 
     </div> <!-- outerContainer -->
+    
     <div id="printContainer"></div>
-  </body>
-</html>
+    <div id="localeContainer" lang="${language}"></div>
+    
 
+
+
+  </body>
+
+</html>

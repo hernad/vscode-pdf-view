@@ -13143,6 +13143,7 @@ function renderPage(activeServiceOnEntry, pdfDocument, pageNumber, size) {
   ctx.fillStyle = 'rgb(255, 255, 255)';
   ctx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
   ctx.restore();
+  console.log('pdfjs.debug renderPage: ' + pageNumber);
   return pdfDocument.getPage(pageNumber).then(function (pdfPage) {
     var renderContext = {
       canvasContext: ctx,
@@ -13165,6 +13166,7 @@ function PDFPrintService(pdfDocument, pagesOverview, printContainer, l10n) {
   this.l10n = l10n || _ui_utils.NullL10n;
   this.disableCreateObjectURL = pdfDocument.loadingParams['disableCreateObjectURL'];
   this.currentPage = -1;
+  console.log('pdfjs.debug PDFPrintService, pagesOverview ' + pagesOverview);
   this.scratchCanvas = document.createElement('canvas');
 }
 PDFPrintService.prototype = {
