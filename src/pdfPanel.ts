@@ -7,15 +7,9 @@ export class PdfPanel {
 
     public static currentPdfPanel: PdfPanel;
     public static pdfNum: number = 1;
-    
-    public static create() {
-        
-        if (PdfPanel.pdfNum % 2 === 0) {
-           PdfPanel.currentPdfPanel = new PdfPanel('/home/hernad/.eShell-dev/extensions/F18/data/bbilans.pdf');
-        } else {
-           PdfPanel.currentPdfPanel = new PdfPanel('/home/hernad/.eShell-dev/extensions/F18/data/test.pdf');
-        };
 
+    public static create(fileName?: string) {
+        PdfPanel.currentPdfPanel = new PdfPanel(fileName);
         PdfPanel.pdfNum++;
     }
 
@@ -25,15 +19,24 @@ export class PdfPanel {
     private panelCaption: string;
     private fileName: string;
 
-    private constructor(fileName: string) {
+    private constructor(fileName?: string) {
 
-        this.fileName = fileName;
+        if (fileName) {
+            this.fileName = fileName;
+        } else {
+            this.fileName = '';
+        }
+
         this.extensionPath = Global.context.extensionPath;
-        this.panelCaption = path.basename(this.fileName);
+        if (this.fileName === '') {
+            this.panelCaption = 'PDF viewer';
+        } else {
+            this.panelCaption = path.basename(this.fileName);
+        }
         // this.webPanel = 
         this.createWebPanel();
         //this.webPanel.onDidChangeViewState(() => {
-            // vscode.window.showInformationMessage('webpanel onDidChangeViewState');
+        // vscode.window.showInformationMessage('webpanel onDidChangeViewState');
         //});
 
     }
@@ -48,11 +51,11 @@ export class PdfPanel {
         ];
 
         const extF18 = vscode.extensions.getExtension('bout.f18-klijent');
-        
+
         if (extF18) {
             localResourceRoots.push(vscode.Uri.file(path.join(extF18.extensionPath, '..', 'F18', 'data')));
         }
-	   
+
         const w = vscode.window.createWebviewPanel(
             PdfPanel.viewType,
             this.panelCaption,
@@ -64,38 +67,42 @@ export class PdfPanel {
             }
         );
 
-        
-    /*
 
-    vscode_viewer.html 'DOMContentLoaded' - webViewerLoad()
+        /*
+    
+        vscode_viewer.html 'DOMContentLoaded' - webViewerLoad()
+    
+          // vscode_viewer.js: vscode-patch 2
+    
+          // The canvas and each ancestor node must have a height of 100% to make
+          // sure that each canvas is printed on exactly one page.
+          '#printContainer {height:100%}' +
+          '#printContainer > div {width:100% !important;height:100% !important;}' +
+          '}';
+    
+    
+           // vscode_viewer.js: vscode-patch 3 locale
+    
+           const langElement = document.getElementById('localeContainer');
+           if (langElement) {
+                const locale = langElement.getAttribute('lang');
+                console.log(`pdf.js debug locale from localeContainer: ${locale}`);
+                this.l10n = this.externalServices.createL10n({ locale });
+            }
+            else
+                this.l10n = this.externalServices.createL10n({ locale: _app_options.AppOptions.get('locale') });
+    
+        */
 
-      // vscode_viewer.js: vscode-patch 2
-
-      // The canvas and each ancestor node must have a height of 100% to make
-      // sure that each canvas is printed on exactly one page.
-      '#printContainer {height:100%}' +
-      '#printContainer > div {width:100% !important;height:100% !important;}' +
-      '}';
-
-
-       // vscode_viewer.js: vscode-patch 3 locale
-
-       const langElement = document.getElementById('localeContainer');
-       if (langElement) {
-            const locale = langElement.getAttribute('lang');
-            console.log(`pdf.js debug locale from localeContainer: ${locale}`);
-            this.l10n = this.externalServices.createL10n({ locale });
-        }
-        else
-            this.l10n = this.externalServices.createL10n({ locale: _app_options.AppOptions.get('locale') });
-
-    */
-
-        let html = fs.readFileSync( path.join(this.extensionPath, 'pdf.js_build_generic', 'web', 'vscode_viewer.html'), 'utf8');
+        let html = fs.readFileSync(path.join(this.extensionPath, 'pdf.js_build_generic', 'web', 'vscode_viewer.html'), 'utf8');
         // https://stackoverflow.com/questions/20856197/remove-non-ascii-character-in-string
         html = html.replace(/[^\x00-\x7F]/g, "");
         html = html.replace(/\$\{extensionPath\}/g, 'vscode-resource:' + this.extensionPath);
-        html = html.replace(/\$\{defaultUrl\}/g, `vscode-resource:${this.fileName}`);
+        if (this.fileName === '') {
+            html = html.replace(/\$\{defaultUrl\}/g, '');
+        } else {
+            html = html.replace(/\$\{defaultUrl\}/g, `vscode-resource:${this.fileName}`);
+        }
         html = html.replace(/\$\{language\}/g, 'bs-BA');
 
         w.webview.html = html;
