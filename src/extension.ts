@@ -12,8 +12,8 @@ export function activate(context: vscode.ExtensionContext) {
 	// console.log('Congratulations, your extension "pdf-view" is now active!');
 	Global.context = context;
 
-	let disposable = vscode.commands.registerCommand('pdf.view', (fileName?: string) => {
-		PdfPanel.create(fileName);
+	let disposable = vscode.commands.registerCommand('pdf.view', (urifileName?: string) => {
+		PdfPanel.create(urifileName);
 	});
 
 	context.subscriptions.push(disposable);

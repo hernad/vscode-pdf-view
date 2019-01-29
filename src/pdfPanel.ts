@@ -8,8 +8,8 @@ export class PdfPanel {
     public static currentPdfPanel: PdfPanel;
     public static pdfNum: number = 1;
 
-    public static create(fileName?: string) {
-        PdfPanel.currentPdfPanel = new PdfPanel(fileName);
+    public static create(urifileName?: string) {
+        PdfPanel.currentPdfPanel = new PdfPanel(urifileName);
         PdfPanel.pdfNum++;
     }
 
@@ -17,21 +17,21 @@ export class PdfPanel {
     private static viewType: 'PDF';
     //private webPanel: vscode.WebviewPanel;
     private panelCaption: string;
-    private fileName: string;
+    private urifileName: string;
 
-    private constructor(fileName?: string) {
+    private constructor(urifileName?: string) {
 
-        if (fileName) {
-            this.fileName = fileName;
+        if (urifileName) {
+            this.urifileName = urifileName;
         } else {
-            this.fileName = '';
+            this.urifileName = '';
         }
 
         this.extensionPath = Global.context.extensionPath;
-        if (this.fileName === '') {
+        if (this.urifileName === '') {
             this.panelCaption = 'PDF viewer';
         } else {
-            this.panelCaption = path.basename(this.fileName);
+            this.panelCaption = path.basename(vscode.Uri.parse(this.urifileName).fsPath);
         }
         // this.webPanel = 
         this.createWebPanel();
@@ -97,11 +97,13 @@ export class PdfPanel {
         let html = fs.readFileSync(path.join(this.extensionPath, 'pdf.js_build_generic', 'web', 'vscode_viewer.html'), 'utf8');
         // https://stackoverflow.com/questions/20856197/remove-non-ascii-character-in-string
         html = html.replace(/[^\x00-\x7F]/g, "");
-        html = html.replace(/\$\{extensionPath\}/g, 'vscode-resource:' + this.extensionPath);
-        if (this.fileName === '') {
+
+        const fileUri: vscode.Uri = vscode.Uri.file(this.extensionPath);
+        html = html.replace(/\$\{extensionPath\}/g, fileUri.with({ scheme: 'vscode-resource'}).toString());
+        if (this.urifileName === '') {
             html = html.replace(/\$\{defaultUrl\}/g, '');
         } else {
-            html = html.replace(/\$\{defaultUrl\}/g, `vscode-resource:${this.fileName}`);
+            html = html.replace(/\$\{defaultUrl\}/g, `${this.urifileName}`);
         }
         html = html.replace(/\$\{language\}/g, 'bs-BA');
 
