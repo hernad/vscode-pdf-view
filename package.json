@@ -3,7 +3,7 @@
 	"displayName": "pdf-view",
 	"description": "webview pdf view",
 	"publisher": "bout",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"engines": {
 		"vscode": "^1.30.0"
 	},
