@@ -13168,7 +13168,7 @@
   var overlayManager = null;
   function renderPage(activeServiceOnEntry, pdfDocument, pageNumber, size) {
     var scratchCanvas = activeService.scratchCanvas;
-    var PRINT_RESOLUTION = 600;
+    var PRINT_RESOLUTION = 1200;
     var PRINT_UNITS = PRINT_RESOLUTION / 72.0;
     scratchCanvas.width = Math.floor(size.width * PRINT_UNITS);
     scratchCanvas.height = Math.floor(size.height * PRINT_UNITS);
@@ -13177,11 +13177,11 @@
     var ctx = scratchCanvas.getContext('2d');
     ctx.save();
     ctx.fillStyle = 'rgb(255, 255, 0)';
-    console.log(`scratch canvas: ${scratchCanvas.width}, ${scratchCanvas.height}`);
+    console.log(`vscode scratch canvas 1200 dpi: ${scratchCanvas.width}, ${scratchCanvas.height}`);
     ctx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
     ctx.restore();
 
-    console.log(`pdf.js debug renderPage: ${pageNumber}`);
+
     return pdfDocument.getPage(pageNumber).then(function (pdfPage) {
       var renderContext = {
         canvasContext: ctx,
@@ -13189,7 +13189,6 @@
         viewport: pdfPage.getViewport(1, size.rotation),
         intent: 'print'
       };
-      console.log(`pdf.js renderContext: ${JSON.stringify(renderContext)}`);
       return pdfPage.render(renderContext).promise;
     }).then(function () {
       console.log(`render/3 ${width} : ${height}`);
