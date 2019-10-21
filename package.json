@@ -1,6 +1,6 @@
 {
-	"name": "pdf-view",
-	"displayName": "pdf-view",
+	"name": "pdf-view-dev",
+	"displayName": "pdf-view DEV",
 	"description": "webview pdf view",
 	"publisher": "bringout",
 	"version": "0.3.6",
