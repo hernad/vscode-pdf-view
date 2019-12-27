@@ -50,7 +50,7 @@ export class PdfPanel {
             vscode.Uri.file(path.join(this.extensionPath, 'node_modules')),
         ];
 
-        const extF18 = vscode.extensions.getExtension('bringout.f18-klijent-dev');
+        const extF18 = vscode.extensions.getExtension('bringout.f18-klijent');
 
         if (extF18) {
             localResourceRoots.push(vscode.Uri.file(path.join(extF18.extensionPath, '..', 'F18', 'data')));
