@@ -1,11 +1,11 @@
 {
-	"name": "pdf-view-dev",
-	"displayName": "pdf-view DEV",
-	"description": "webview pdf view",
+	"name": "pdf-view",
+	"displayName": "pdf-view eShell",
+	"description": "pdf view for eShell",
 	"publisher": "bringout",
-	"version": "0.3.6",
+	"version": "2.0.0",
 	"engines": {
-		"vscode": "^1.30.0"
+		"vscode": "^1.41.0"
 	},
 	"keywords": [
 		"F18",
