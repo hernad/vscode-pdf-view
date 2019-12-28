@@ -1,9 +1,9 @@
 {
 	"name": "pdf-view",
-	"displayName": "pdf-view eShell",
+	"displayName": "pdf-view [eShell]",
 	"description": "pdf view for eShell",
 	"publisher": "bringout",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"engines": {
 		"vscode": "^1.41.0"
 	},
