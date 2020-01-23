@@ -2840,7 +2840,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var CSS_UNITS = 96.0 / 72.0;
-var DEFAULT_SCALE_VALUE = 'auto';
+var DEFAULT_SCALE_VALUE = 'page-width';
 var DEFAULT_SCALE = 1.0;
 var MIN_SCALE = 0.10;
 var MAX_SCALE = 10.0;
