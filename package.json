@@ -3,7 +3,7 @@
 	"displayName": "pdf-view [eShell]",
 	"description": "pdf view for eShell",
 	"publisher": "bringout",
-	"version": "2.1.1",
+	"version": "2.1.2",
 	"engines": {
 		"vscode": "^1.41.0"
 	},

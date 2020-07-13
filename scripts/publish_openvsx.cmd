@@ -1,4 +1,6 @@
-yarn install
+@echo off
+
+echo PREREQ: yarn install
 
 set /p OPENVSX_TOKEN= < %USERPROFILE%\.openvsx_token
 echo %OPENVSX_TOKEN%
