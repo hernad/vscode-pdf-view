@@ -62,6 +62,7 @@ export class PdfPanel {
             { viewColumn: vscode.ViewColumn.Active, preserveFocus: false },
             {
                 enableScripts: true, // Enable javascript in the webview
+                enableCommandUris: true,
                 retainContextWhenHidden: true,
                 localResourceRoots
             }

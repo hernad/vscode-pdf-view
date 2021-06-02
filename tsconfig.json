@@ -12,9 +12,6 @@
 		"noUnusedLocals": true
 		
 	},
-	"include": [
-		"typings"
-	],
 	"exclude": [
 		"node_modules",
 		".vscode-test"
