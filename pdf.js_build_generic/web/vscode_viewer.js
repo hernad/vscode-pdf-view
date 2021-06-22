@@ -20,6 +20,8 @@
  * Javascript code in this page
  */
 
+ const vscode = acquireVsCodeApi();
+ 
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -111,7 +113,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
   "use strict";
-
+  
   var pdfjsWebApp = void 0,
       pdfjsWebAppOptions = void 0;
   {
@@ -619,7 +621,7 @@
               const langElement = document.getElementById('localeContainer');
               if (langElement) {
                  const locale = langElement.getAttribute('lang');
-                 console.log(`pdf.js debug locale from localeContainer: ${locale}`);
+                 //console.log(`pdf.js debug locale from localeContainer: ${locale}`);
                  this.l10n = this.externalServices.createL10n({ locale });
               }
               else
@@ -2049,9 +2051,11 @@
     var pdfViewer = PDFViewerApplication.pdfViewer;
     var isViewerInPresentationMode = pdfViewer && pdfViewer.isInPresentationMode;
     if (cmd === 1 || cmd === 8 || cmd === 5 || cmd === 12) {
+      // ctrl
       switch (evt.keyCode) {
-        case 70:
+        case 70: // F
           if (!PDFViewerApplication.supportsIntegratedFind) {
+            console.log("findBar open");
             PDFViewerApplication.findBar.open();
             handled = true;
           }
@@ -2174,15 +2178,25 @@
           turnPage = -1;
           break;
         case 27:
-          if (PDFViewerApplication.secondaryToolbar.isOpen) {
-            PDFViewerApplication.secondaryToolbar.close();
-            handled = true;
-          }
-          if (!PDFViewerApplication.supportsIntegratedFind && PDFViewerApplication.findBar.opened) {
-            PDFViewerApplication.findBar.close();
-            handled = true;
-          }
+          console.log('PDF view escape hit');
+          PDFViewerApplication.close();
+          // Unsafe attempt to initiate navigation for frame with origin 'file://' from frame with URL 'vscode-webview://01dd.../index.html?id=01dd3fa3-dadd-4fc2-8d90-b12cdedfbdce&extensionId=bringout.pdf-view&purpos...'. The frame attempting navigation of the top-level window is sandboxed, but the flag of 'allow-top-navigation' or 'allow-top-navigation-by-user-activation' is not set.
+          // window.top.close();
+          var topWindow = window.open("", "_self");
+          topWindow.document.write("");
+          vscode.postMessage({
+            command: 'terminate'
+          });
           break;
+          //if (PDFViewerApplication.secondaryToolbar.isOpen) {
+          //  PDFViewerApplication.secondaryToolbar.close();
+          //  handled = true;
+          //}
+          //if (!PDFViewerApplication.supportsIntegratedFind && PDFViewerApplication.findBar.opened) {
+          //  PDFViewerApplication.findBar.close();
+          //  handled = true;
+          //}
+          //break;
         case 40:
         case 34:
           if (pdfViewer.isVerticalScrollbarEnabled) {
@@ -9115,7 +9129,7 @@
       key: '_setScale',
       value: function _setScale(value) {
 
-        console.log(`pdf.js debug _setScale ${value}`)
+        //console.log(`pdf.js debug _setScale ${value}`)
         var noScroll = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   
         var scale = parseFloat(value);
@@ -9157,7 +9171,7 @@
               console.error(this._name + '._setScale: "' + value + '" is an unknown zoom value.');
               return;
           }
-          console.log(`pdf.js debug _setScale end: ${scale}`)
+          //console.log(`pdf.js debug _setScale end: ${scale}`)
           this._setScaleUpdatePages(scale, value, noScroll, true);
         }
       }
@@ -13305,12 +13319,12 @@
       this.throwIfInactive();
       return new Promise(function (resolve) {
         setTimeout(function () {
-          console.log(`pdf.js debug promise performPrint start`);
+          //console.log(`pdf.js debug promise performPrint start`);
           if (!_this2.active) {
             resolve();
             return;
           }
-          console.log(`pdf.js debug promise performPrint print.call ${window.name}`);
+          //console.log(`pdf.js debug promise performPrint print.call ${window.name}`);
           print.call(window);
           setTimeout(resolve, 20);
         }, 0);
@@ -13328,7 +13342,7 @@
   };
   var print = window.print;
   window.print = function print() {
-    console.log('pdf.js debug windows print start');
+    //console.log('pdf.js debug windows print start');
     if (activeService) {
       console.warn('Ignored window.print() because of a pending print job.');
       return;

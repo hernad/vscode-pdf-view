@@ -68,6 +68,14 @@ export class PdfPanel {
             }
         );
 
+        // Handle messages from the webview
+        w.webview.onDidReceiveMessage((message: any) => {
+            if (message.command == 'terminate') {
+                    w.dispose();
+                    //vscode.workspace. workbench.view.extension.<your-panel-id> 
+                    vscode.commands.executeCommand('f18.focus');
+            }
+        });
 
         /*
     

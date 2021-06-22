@@ -2031,8 +2031,9 @@ function webViewerKeyDown(evt) {
   var pdfViewer = PDFViewerApplication.pdfViewer;
   var isViewerInPresentationMode = pdfViewer && pdfViewer.isInPresentationMode;
   if (cmd === 1 || cmd === 8 || cmd === 5 || cmd === 12) {
+    //https://stackoverflow.com/questions/3369593/how-to-detect-escape-key-press-with-pure-js-or-jquery
     switch (evt.keyCode) {
-      case 70:
+      case 70: //find
         if (!PDFViewerApplication.supportsIntegratedFind) {
           PDFViewerApplication.findBar.open();
           handled = true;
