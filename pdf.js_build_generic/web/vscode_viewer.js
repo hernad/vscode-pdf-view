@@ -1384,7 +1384,7 @@
     beforePrint: function beforePrint() {
       var _this7 = this;
   
-      console.log('vscode-debug: beforePrint');
+      //console.log('vscode-debug: beforePrint');
       if (this.printService) {
         return;
       }
@@ -1410,7 +1410,7 @@
   
     afterPrint: function pdfViewSetupAfterPrint() {
 
-      console.log('vscode-debug: ViewSetupAfterPrint');
+      //console.log('vscode-debug: ViewSetupAfterPrint');
 
       if (this.printService) {
         this.printService.destroy();
@@ -2178,7 +2178,7 @@
           turnPage = -1;
           break;
         case 27:
-          console.log('PDF view escape hit');
+          //console.log('PDF view escape hit');
           PDFViewerApplication.close();
           // Unsafe attempt to initiate navigation for frame with origin 'file://' from frame with URL 'vscode-webview://01dd.../index.html?id=01dd3fa3-dadd-4fc2-8d90-b12cdedfbdce&extensionId=bringout.pdf-view&purpos...'. The frame attempting navigation of the top-level window is sandboxed, but the flag of 'allow-top-navigation' or 'allow-top-navigation-by-user-activation' is not set.
           // window.top.close();
