@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { Global } from './global';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as open from 'open';
 
 export class PdfPanel {
 
@@ -82,8 +83,14 @@ export class PdfPanel {
 
                const regex = /https.*\/file\//;
                
-               // const caption = error.message;
-               vscode.env.openExternal(vscode.Uri.parse(message.data.url.replace(regex, "file:///")));
+               //vscode.env.openExternal(vscode.Uri.parse(message.data.url.replace(regex, "file:///")));
+               //ovo na windowsima ne radi?
+               // open nodejs bi trebao da radi posao
+               open(message.data.url.replace(regex, "file:///"), {
+                    //app: {
+                    //    name: open.apps.chrome
+                    //}
+                });
             }
         });
 
