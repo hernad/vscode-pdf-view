@@ -23,9 +23,10 @@
               // window.PDFViewerApplication = pdfjsWebApp.PDFViewerApplication;
               // window.PDFViewerApplicationOptions = pdfjsWebAppOptions.AppOptions;          
               // vscode-patch 1
-              document.getElementById('download').setAttribute('hidden', 'true');
+              // hernad download enable!
+              //document.getElementById('download').setAttribute('hidden', 'false');
               document.getElementById('viewBookmark').setAttribute('hidden', 'true');
-              document.getElementById('secondaryDownload').setAttribute('hidden', 'true');
+              //document.getElementById('secondaryDownload').setAttribute('hidden', 'false');
               document.getElementById('secondaryViewBookmark').setAttribute('hidden', 'true');
   
               PDFViewerApplicationOptions.set('defaultUrl', '${defaultUrl}');

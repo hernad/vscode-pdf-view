@@ -75,6 +75,16 @@ export class PdfPanel {
                     //vscode.workspace. workbench.view.extension.<your-panel-id> 
                     vscode.commands.executeCommand('f18.focus');
             }
+
+            if (message.command == 'download') {               
+               //vscode.window.showInformationMessage('download!', message.data.filename, message.data.url)
+               // https://7c773cfd-2e84-4a43-8975-52537ba4aff5.vscode-webview-test.com/vscode-resource/file/home/...pdf
+
+               const regex = /https.*\/file\//;
+               
+               // const caption = error.message;
+               vscode.env.openExternal(vscode.Uri.parse(message.data.url.replace(regex, "file:///")));
+            }
         });
 
         /*

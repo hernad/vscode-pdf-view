@@ -255,12 +255,6 @@
     window.PDFViewerApplication = pdfjsWebApp.PDFViewerApplication;
     window.PDFViewerApplicationOptions = pdfjsWebAppOptions.AppOptions;
 
-    // vscode-patch 1
-    // config.toolbar.viewBookmark.setAttribute('hidden', 'true');
-    // config.secondaryToolbar.viewBookmarkButton.setAttribute('hidden', 'true');
-    // config.toolbar.download.setAttribute('hidden', 'true');
-    // config.secondaryToolbar.downloadButton.setAttribute('hidden', 'true');
-
     pdfjsWebApp.PDFViewerApplication.run(config);
   }
   if (document.readyState === 'interactive' || document.readyState === 'complete') {
@@ -1622,12 +1616,18 @@
     fileInput.setAttribute('type', 'file');
     fileInput.oncontextmenu = _ui_utils.noContextMenuHandler;
     document.body.appendChild(fileInput);
-    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+    //hernad "open file" disabled
+    //if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
       appConfig.toolbar.openFile.setAttribute('hidden', 'true');
       appConfig.secondaryToolbar.openFileButton.setAttribute('hidden', 'true');
-    } else {
-      fileInput.value = null;
-    }
+    //} else {
+    // fileInput.value = null;
+    //}
+
+    // enable "download"
+    //appConfig.toolbar.download.setAttribute('hidden', 'false');
+    //appConfig.secondaryToolbar.downloadButton.setAttribute('hidden', 'false');
+
     fileInput.addEventListener('change', function (evt) {
       var files = evt.target.files;
       if (!files || files.length === 0) {
@@ -1674,6 +1674,8 @@
     });
     try {
       webViewerOpenFileViaURL(file);
+      // https://646e8672-8d3a-4bfa-b569-1e3df2e399be.vscode-webview-test.com/vscode-resource/file/home/ernad.husremovic/.vscode-oss/extensions/F18/data/vindija_2021/F18_rpt_Fivsp1.pdf
+      // console.log('WebViewerOpenFileViaURL', file);
     } catch (reason) {
       PDFViewerApplication.l10n.get('loading_error', null, 'An error occurred while loading the PDF.').then(function (msg) {
         PDFViewerApplication.error(msg, reason);
@@ -1859,8 +1861,9 @@
       var appConfig = PDFViewerApplication.appConfig;
       appConfig.toolbar.viewBookmark.setAttribute('hidden', 'true');
       appConfig.secondaryToolbar.viewBookmarkButton.setAttribute('hidden', 'true');
-      appConfig.toolbar.download.setAttribute('hidden', 'true');
-      appConfig.secondaryToolbar.downloadButton.setAttribute('hidden', 'true');
+      // hernad: allow download option
+      //appConfig.toolbar.download.setAttribute('hidden', 'false');
+      //appConfig.secondaryToolbar.downloadButton.setAttribute('hidden', 'false');
     };
   }
   function webViewerPresentationMode() {
@@ -12222,6 +12225,7 @@
     _createClass(DownloadManager, [{
       key: 'downloadUrl',
       value: function downloadUrl(url, filename) {
+        console.log('downloadUrl');
         if (!(0, _pdfjsLib.createValidAbsoluteUrl)(url, 'http://example.com')) {
           return;
         }
@@ -12230,6 +12234,7 @@
     }, {
       key: 'downloadData',
       value: function downloadData(data, filename, contentType) {
+        console.log('downloadData');
         if (navigator.msSaveBlob) {
           return navigator.msSaveBlob(new Blob([data], { type: contentType }), filename);
         }
@@ -12239,7 +12244,20 @@
     }, {
       key: 'download',
       value: function download(blob, url, filename) {
+        console.log('download');
+
+        // download
+        vscode.postMessage({
+          command: 'download',
+          data: { 
+            'blob': blob, 
+            'url': url, 
+            'filename': filename 
+          }
+        });
+
         if (navigator.msSaveBlob) {
+          // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/msSaveBlob
           if (!navigator.msSaveBlob(blob, filename)) {
             this.downloadUrl(url, filename);
           }
@@ -13191,7 +13209,7 @@
     var ctx = scratchCanvas.getContext('2d');
     ctx.save();
     ctx.fillStyle = 'rgb(255, 255, 0)';
-    console.log(`vscode scratch canvas 600dpi: ${scratchCanvas.width}, ${scratchCanvas.height}`);
+    //console.log(`vscode scratch canvas 600dpi: ${scratchCanvas.width}, ${scratchCanvas.height}`);
     ctx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
     ctx.restore();
 
