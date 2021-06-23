@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { Global } from './global';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as open from 'open';
 
 export class PdfPanel {
 
@@ -77,20 +76,20 @@ export class PdfPanel {
                     vscode.commands.executeCommand('f18.focus');
             }
 
-            if (message.command == 'download') {               
-               //vscode.window.showInformationMessage('download!', message.data.filename, message.data.url)
+            if (message.command == 'download') { 
+               
+               //windows:
+               //vscode-webview-resource://d8b433f6-ddbd-4e62-a020-20b342545643/file///c%3A/Users/ernad/.eShell/...pdf
+
+               // linux
                // https://7c773cfd-2e84-4a43-8975-52537ba4aff5.vscode-webview-test.com/vscode-resource/file/home/...pdf
 
-               const regex = /https.*\/file\//;
-               
-               //vscode.env.openExternal(vscode.Uri.parse(message.data.url.replace(regex, "file:///")));
-               //ovo na windowsima ne radi?
-               // open nodejs bi trebao da radi posao
-               open(message.data.url.replace(regex, "file:///"), {
-                    //app: {
-                    //    name: open.apps.chrome
-                    //}
-                });
+               const regex = (process.platform === 'win32') ? 
+                  /vscode-webview-resource.*\/file\/\/\// : 
+                  /https.*\/file\//;
+         
+               //vscode.window.showInformationMessage(message.data.url.replace(regex, "file:///"))    
+               vscode.env.openExternal(vscode.Uri.parse(message.data.url.replace(regex, "file:///")));
             }
         });
 
