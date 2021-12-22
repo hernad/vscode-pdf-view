@@ -32,7 +32,8 @@
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"test": "yarn run compile && node ./node_modules/vscode/bin/test",
-		"extension-publish": "vsce publish --yarn"
+		"extension-publish": "vsce publish --yarn",
+		"extension-package": "vsce package --yarn"
 	},
 	"devDependencies": {
 		"@types/mocha": "^2.2.42",
@@ -42,7 +43,8 @@
 		"@typescript-eslint/eslint-plugin": "^4.16.0",
 		"@typescript-eslint/parser": "^4.16.0",
 		"eslint": "^7.21.0",
-		"typescript": "^4.2.2"
+		"typescript": "^4.2.2",
+		"vsce": "^1.7.7"
 	},
 	"dependencies": {},
 	"repository": {
