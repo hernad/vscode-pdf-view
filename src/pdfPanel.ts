@@ -84,12 +84,22 @@ export class PdfPanel {
                // linux
                // https://7c773cfd-2e84-4a43-8975-52537ba4aff5.vscode-webview-test.com/vscode-resource/file/home/...pdf
 
+               let url = message.data.url;
+               // ver eShell 1.47
                const regex = (process.platform === 'win32') ? 
                   /vscode-webview-resource.*\/file\/\/\// : 
                   /https.*\/file\//;
-         
-               //vscode.window.showInformationMessage(message.data.url.replace(regex, "file:///"))    
-               vscode.env.openExternal(vscode.Uri.parse(message.data.url.replace(regex, "file:///")));
+       
+               url =  url.replace(regex, "file:///");
+
+               //ver vscodium 1.63.x url:
+               //https://file+.vscode-resource.vscode-webview.net/c:/Users/ernad.husremovic.SA/.vscode-oss-dev/extensions/F18/data/vindija_2021/F18_rpt_ehebjh.pdf
+               const regex2 = /https.*vscode-webview\.net\//;
+               url =  url.replace(regex2, "file:///");
+
+               //vscode.window.showInformationMessage(message.data.url.replace(regex, "file:///"))
+               console.log(`pdf file url: ${url}`);   
+               vscode.env.openExternal(vscode.Uri.parse(url));
             }
         });
 
